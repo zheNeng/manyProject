@@ -56,9 +56,13 @@ module.exports = {
   configureWebpack: config => {
     config.resolve.alias["@"] = resolve(`./src/${process.env.ENV_file}`);
     config.resolve.alias["=_="] = resolve(`./publicUtil`);
+    config.optimization.splitChunks=false
+    
+    const terserWebpackPlugin = config.optimization.minimizer[0];
+    terserWebpackPlugin.options.test = /a.js$/
     if (process.env.NODE_ENV == "production" &&process.env.ENV_file!=='library') {
-      const terserWebpackPlugin = config.optimization.minimizer[0];
-      // terserWebpackPlugin.options.test = /a.js$/;
+     
+      // ;
       terserWebpackPlugin.options.terserOptions.compress.drop_console = true; //关闭生产的console
       const splitChunksWebpackPlugin = config.optimization.splitChunks;
       splitChunksWebpackPlugin.cacheGroups.VRA = {

@@ -41,6 +41,10 @@ module.exports = {
     }
   },
   chainWebpack: config => {
+    if(process.env.ENV_file==='library'&&process.env.NODE_ENV == "production"){
+      config.output.libraryTarget('umd')
+      config.output.library('library')
+    }
     config.module
       .rule("vue")
       .use("px2rem")
@@ -52,7 +56,7 @@ module.exports = {
   configureWebpack: config => {
     config.resolve.alias["@"] = resolve(`./src/${process.env.ENV_file}`);
     config.resolve.alias["=_="] = resolve(`./publicUtil`);
-    if (process.env.NODE_ENV == "production") {
+    if (process.env.NODE_ENV == "production" &&process.env.ENV_file!=='library') {
       const terserWebpackPlugin = config.optimization.minimizer[0];
       // terserWebpackPlugin.options.test = /a.js$/;
       terserWebpackPlugin.options.terserOptions.compress.drop_console = true; //关闭生产的console

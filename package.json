@@ -7,7 +7,9 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "dev-demo": "cross-env ENV_file=demo npm run serve",
-    "build-demo": "cross-env ENV_file=demo npm run build"
+    "build-demo": "cross-env ENV_file=demo npm run build" ,
+    "dev-library": "cross-env ENV_file=library npm run serve",
+    "build-library": "cross-env ENV_file=library npm run build" 
   },
   "dependencies": {
     "vue": "^2.5.21",

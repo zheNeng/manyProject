@@ -1,0 +1,68 @@
+/* 公共样式 */
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.row {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+}
+.row
+  for i in 1 2 3 4 5 6 7 8 9 10 11 12
+    .col-{i}
+      width: unit(i/0.12,'%')
+      float: left;
+      box-sizing: border-box;
+
+::-webkit-scrollbar {
+  /* 隐藏滚轮 */
+  display: none;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px white inset; // 使用足够大的纯色内阴影覆盖黄色背景
+}
+
+body,div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, blockquote, p {
+  padding: 0;
+  margin: 0;
+}
+
+table, td, tr, th {
+  font-size: 12px;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+li {
+  list-style-type: none;
+}
+
+img {
+  vertical-align: top;
+  border: 0;
+  max-width: 100%;
+  height: auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: inherit;
+  font-weight: normal;
+}
+
+address, cite, code, em, th, i, var {
+  font-weight: normal;
+  font-style: normal;
+}
+
+input {
+  outline: 0;
+  outline: none;
+  border: 0px;
+}

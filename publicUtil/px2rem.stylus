@@ -1,0 +1,13 @@
+//在每个stylus的文件中引入就好了
+@import "~stylus-px2rem/index.styl"
+// @import "../../node_modules/stylus-px2rem/lib/stylus-px2rem/mixins.styl"
+// @import "../../node_modules/stylus-px2rem/lib/stylus-px2rem/font-size.styl"
+// @import "../../node_modules/stylus-px2rem/lib/stylus-px2rem/border.styl"
+// @import "../../node_modules/stylus-px2rem/lib/stylus-px2rem/margin.styl"
+// @import "../../node_modules/stylus-px2rem/lib/stylus-px2rem/padding.styl"
+// @import "../../node_modules/stylus-px2rem/lib/stylus-px2rem/width.styl"
+// @import "../../node_modules/stylus-px2rem/lib/stylus-px2rem/height.styl"
+// @import "../../node_modules/stylus-px2rem/lib/stylus-px2rem/line-height.styl"
+html-font-size = 37.5px;  //设计稿用375宽度的  设置html的字体大小 font-size =10px 那么此时 1rem = 10px
+//style-names 需要转义的内容
+style-names = "min-height" "max-height" "min-width" "max-width" "width" "height" "border" "margin" "margin-top" "margin-bottom" "margin-left" "margin-right" "padding" "padding-left" "padding-right" "padding-bottom" "padding-top" "line-height"

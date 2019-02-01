@@ -23,7 +23,7 @@ const qiniuPlugin = new qiniu({
 const publicPath =
   process.env.NODE_ENV === "development"
     ? ""
-    : `https://pm4wqd1x0.bkt.clouddn.com/${process.env.ENV_file}/`;
+    : `http://pm4wqd1x0.bkt.clouddn.com/${process.env.ENV_file}/`;
 module.exports = {
   devServer: {
     contentBase: resolve(`../dist/${process.env.ENV_file}`),
@@ -41,34 +41,52 @@ module.exports = {
     }
   },
   chainWebpack: config => {
-    if(process.env.ENV_file==='library'&&process.env.NODE_ENV == "production"){
-      config.output.libraryTarget('umd')
-      config.output.library('library')
+    if (
+      process.env.ENV_file === "library" &&
+      process.env.NODE_ENV == "production"
+    ) {
+      config.output.libraryTarget("umd");
+      config.output.library("library");
     }
+    config.plugin("html-index").tap(e => {
+      e[0].VRA = `http://pm4wqd1x0.bkt.clouddn.com/library/js/index.240dac96.js`;
+      return e;
+    });
     config.module
       .rule("vue")
       .use("px2rem")
       .loader(resolve("./publicUtil/px2rem_loader.js"));
     if (process.env.NODE_ENV == "production") {
-      config.plugin("qqiniu").use(qiniuPlugin);
+      config.plugin("qiniu").use(qiniuPlugin);
     }
   },
   configureWebpack: config => {
     config.resolve.alias["@"] = resolve(`./src/${process.env.ENV_file}`);
     config.resolve.alias["=_="] = resolve(`./publicUtil`);
-    config.optimization.splitChunks=false
-    
-    const terserWebpackPlugin = config.optimization.minimizer[0];
-    terserWebpackPlugin.options.test = /a.js$/
-    if (process.env.NODE_ENV == "production" &&process.env.ENV_file!=='library') {
-     
-      // ;
+    if (
+      process.env.ENV_file === "library" &&
+      process.env.NODE_ENV == "production"
+    ) {
+      config.optimization.splitChunks = false;
+    }
+    if (
+      process.env.NODE_ENV == "production" &&
+      process.env.ENV_file !== "library"
+    ) {
+      config.externals = {
+        vue: "library.Vue",
+        axios: "library.axios",
+        "vue-router": "library.vueRouter",
+        vuex: "library.vuex"
+      };
+      const terserWebpackPlugin = config.optimization.minimizer[0];
+      terserWebpackPlugin.options.test = /a.js$/;
       terserWebpackPlugin.options.terserOptions.compress.drop_console = true; //关闭生产的console
       const splitChunksWebpackPlugin = config.optimization.splitChunks;
-      splitChunksWebpackPlugin.cacheGroups.VRA = {
+      splitChunksWebpackPlugin.cacheGroups["VRA"] = {
         //axios vue lib-flexible打到一起
         name: "VRA",
-        test: /[\\/]node_modules[\\/](vue|axios|lib-flexible)/,
+        test: /[\\/]node_modules[\\/]((vue$)|axios|vuex)/,
         minSize: 10,
         minChunks: 1,
         maxInitialRequests: 3,

@@ -3,9 +3,11 @@
 
     * 引入 lib-flexible + stylus-px2rem + px2rem_loader
 
-  2. 多项目
+  2. 新建项目
 
-    * 修改 entry 文件, index 的模板地址，输出路径
+    * 在src文件夹下新建文件夹,index.html是模板文件,main.js是入口文件
+
+    * 常规Vue文件接口，参照demo文件
 
   3. 别名
 
@@ -33,6 +35,34 @@
     * dialog
 
     * row/cell
+
+  7.library组件库开发
+
+    * 在src/library目录下,此包会被输出到dist的library文件下
+
+    * 该配置，主要用来上传公共组件库
+
+    * 在其他项目中使用cdn加载公共依赖包，减少chunk体积。
+
+    * webpakc中的externals配置
+      ```js
+        externals:{
+          vue:{
+            root:library.Vue;
+            commonjs:library.Vue,
+            commonjs2:library.Vue,
+            amd:library.Vue,
+          },
+          axios:{
+            root:library.axios;
+            commonjs:library.axios,
+            commonjs2:library.axios,
+            amd:library.axios,
+          }
+        } 
+      ```
+    * template模板自定义一下插槽
+    
     
 
 ## Project setup

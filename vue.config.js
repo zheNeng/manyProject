@@ -17,7 +17,7 @@ function getExternals(
   const obj = {
     reg: "",
     externals: {},
-    path: "http://pm4wqd1x0.bkt.clouddn.com/library/js/index.bf06e4a8.js"
+    path: "http://pm4wqd1x0.bkt.clouddn.com/library/js/index.46100335.js"
   };
   function getModules(e, isKey = false) {
     if (typeof e == "object") {
@@ -93,9 +93,13 @@ module.exports = {
     ) {
       config.output.libraryTarget("umd");
       config.output.library("library");
-      config.plugin("markExternals").use(new markExternals(externals))
+      config.plugin("markExternals").use(new markExternals(externals));
+    }
+    if (process.env.NODE_ENV == "production") {
+      config.plugin("qiniu").use(qiniuPlugin);
     }
     config.plugin("html-index").tap(e => {
+      //插槽赋值的变量
       e[0].VRA = externals.path;
       return e;
     });
@@ -103,13 +107,8 @@ module.exports = {
       .rule("vue")
       .use("px2rem")
       .loader(resolve("./publicUtil/px2rem_loader.js"));
-    if (process.env.NODE_ENV == "production") {
-      config.plugin("qiniu").use(qiniuPlugin);
-    }
   },
   configureWebpack: config => {
-    config.resolve.alias["@"] = resolve(`./src/${process.env.ENV_file}`);
-    config.resolve.alias["=_="] = resolve(`./publicUtil`);
     if (
       process.env.ENV_file === "library" &&
       process.env.NODE_ENV == "production"
@@ -138,6 +137,8 @@ module.exports = {
       //   chunks: "all"
       // };
     }
+    config.resolve.alias["@"] = resolve(`./src/${process.env.ENV_file}`);
+    config.resolve.alias["=_="] = resolve(`./publicUtil`);
     fs.writeFileSync("test-config.json", JSON.stringify(config));
   },
 

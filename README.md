@@ -14,6 +14,9 @@
     * 增加 =_= 指向根路径的publicUtil
 
   4. 七牛云插件
+
+    * build 指令下的静态资源，都会被上传至cdn,具体的配置请查看vue.config.js中的 qiniuPlugin 插件
+
   5. 公共工具库
 
     * 获得url中的参数，包含#前后的
@@ -36,13 +39,13 @@
 
     * row/cell
 
-  7.library组件库开发
+  7. library组件库开发
 
     * 在src/library目录下,此包会被输出到dist的library文件下
 
     * 该配置，主要用来上传公共组件库
 
-    * 在其他项目中使用cdn加载公共依赖包，减少chunk体积。
+    * 在其他项目中使用cdn加载公共依赖包，减少 chunk 体积。
 
     * webpakc中的externals配置
         
@@ -50,12 +53,18 @@
 
         * 在npm run build-demo,其中vue vuex axios vuerouter会被打包至公共依赖
 
-        * 目前公共的依赖的命名还没有自动捕捉，不同机器的hash签名，可能会有区别，所以最好手动添加依赖包地址
+        * 目前公共的依赖的命名还没有自动捕捉,手动在 vue.config.js 的 getExternals 函数中设置 path
 
-        * markExternals.js用来记录每次Build-library的hash值
-
+        * publicUtil 中的 markExternals.js 插件用来记录每次Build-library的hash值,log 在根路径的 markExternals.js 中
 
     * template模板自定义一下插槽
+
+  8. webpack 配置输出到 out.json 文件
+
+  9. 新增项目,请在 package.json 中配置启动指令，设置 cross-env 参数 ENV_file 的值
+
+      "dev-demo": "cross-env ENV_file=demo npm run serve"
+      "build-demo": "cross-env ENV_file=demo npm run build" 
     
     
 
@@ -66,15 +75,11 @@ npm install
 
 ### Compiles and hot-reloads for development
 ```
-npm run serve
+npm run dev-{name}
 ```
 
 ### Compiles and minifies for production
 ```
-npm run build
+npm run build-{name}
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```

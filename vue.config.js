@@ -59,6 +59,7 @@ function getPath(p = "demo") {
   return res;
 }
 const qiniu = require("./publicUtil/qiniuPlugin");
+const markExternals = require("./publicUtil/markExternals");
 const qiniuPlugin = new qiniu({
   accessKey: "3DOo0aOowbfuHWXtGlvYyaLLLzNZ6kuzPaQPvFxK",
   secretKey: "bWNFh1rp8zLayGfFkWEZXvXVCDpt7wOl6jNOuNkC",
@@ -92,6 +93,7 @@ module.exports = {
     ) {
       config.output.libraryTarget("umd");
       config.output.library("library");
+      config.plugin("markExternals").use(new markExternals(externals))
     }
     config.plugin("html-index").tap(e => {
       e[0].VRA = externals.path;
@@ -118,7 +120,6 @@ module.exports = {
       process.env.NODE_ENV == "production" &&
       process.env.ENV_file !== "library"
     ) {
-      console.log("123123312312123");
       config.externals = externals.externals;
       const terserWebpackPlugin = config.optimization.minimizer[0];
       //terserWebpackPlugin.options.test = /a.js$/;

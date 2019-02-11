@@ -45,22 +45,14 @@
     * 在其他项目中使用cdn加载公共依赖包，减少chunk体积。
 
     * webpakc中的externals配置
-      ```js
-        externals:{
-          vue:{
-            root:library.Vue;
-            commonjs:library.Vue,
-            commonjs2:library.Vue,
-            amd:library.Vue,
-          },
-          axios:{
-            root:library.axios;
-            commonjs:library.axios,
-            commonjs2:library.axios,
-            amd:library.axios,
-          }
-        } 
-      ```
+        
+        * 项目需要先跑一遍npm run build-library上传library至七牛云
+
+        * 在npm run build-demo,其中vue vuex axios vuerouter会被打包至公共依赖
+
+        * 目前公共的依赖的命名还没有自动捕捉，不同机器的hash签名，可能会有区别，所以最好手动添加依赖包地址
+
+
     * template模板自定义一下插槽
     
     

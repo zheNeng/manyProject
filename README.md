@@ -52,6 +52,8 @@
 
         * 目前公共的依赖的命名还没有自动捕捉，不同机器的hash签名，可能会有区别，所以最好手动添加依赖包地址
 
+        * markExternals.js用来记录每次Build-library的hash值
+
 
     * template模板自定义一下插槽
     

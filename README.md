@@ -51,7 +51,7 @@
         
         * 项目需要先跑一遍npm run build-library上传library至七牛云
 
-        * 在npm run build-demo,其中vue vuex axios vuerouter会被打包至公共依赖
+        * 在npm run build-demo,其中 vue vuex axios vuerouter 会被打包至公共依赖
 
         * 目前公共的依赖的命名还没有自动捕捉,手动在 vue.config.js 的 getExternals 函数中设置 path
 
@@ -59,7 +59,7 @@
 
     * template模板自定义一下插槽
 
-  8. webpack 配置输出到 out.json 文件
+  8. webpack 配置输出到 test-config.json 文件
 
   9. 新增项目,请在 package.json 中配置启动指令，设置 cross-env 参数 ENV_file 的值
 
@@ -75,11 +75,11 @@ npm install
 
 ### Compiles and hot-reloads for development
 ```
-npm run dev-{name}
+npm run dev-{ ENV_file }
 ```
 
 ### Compiles and minifies for production
 ```
-npm run build-{name}
+npm run build-{ ENV_file }
 ```
 

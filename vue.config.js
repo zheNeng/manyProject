@@ -121,7 +121,7 @@ module.exports = {
       console.log("123123312312123");
       config.externals = externals.externals;
       const terserWebpackPlugin = config.optimization.minimizer[0];
-      terserWebpackPlugin.options.test = /a.js$/;
+      //terserWebpackPlugin.options.test = /a.js$/;
       terserWebpackPlugin.options.terserOptions.compress.drop_console = true; //关闭生产的console
       // const splitChunksWebpackPlugin = config.optimization.splitChunks;
       // splitChunksWebpackPlugin.cacheGroups["VRA"] = {

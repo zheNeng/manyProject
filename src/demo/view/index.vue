@@ -13,7 +13,7 @@ export default {
     return {};
   },
   created() {
-    this.checkUrl();
+    //this.checkUrl();
   },
   beforeRouteLeave(to, from, next) {
     console.log("beforeRouteLeave", to, from);

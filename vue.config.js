@@ -1,9 +1,54 @@
 const path = require("path");
 const fs = require("fs");
+
 function resolve(p) {
   const res = path.resolve(__dirname, p);
   return res;
 }
+
+function getExternals(
+  arr = [
+    { key: "Vue", modules: "vue" },
+    "axios",
+    { key: "vueRouter", modules: "vue-router" },
+    "vuex"
+  ]
+) {
+  const obj = {
+    reg: "",
+    externals: {},
+    path: "http://pm4wqd1x0.bkt.clouddn.com/library/js/index.bf06e4a8.js"
+  };
+  function getModules(e, isKey = false) {
+    if (typeof e == "object") {
+      if (!isKey) {
+        return e.modules;
+      } else {
+        return e.key;
+      }
+    } else {
+      return e;
+    }
+  }
+  var res = `[\\/]node_modules[\\/](${arr.reduce((a, b, index) => {
+    if (index == 1) {
+      return `(${getModules(a)}$)|(${getModules(b)}$)`;
+    } else {
+      const str = `${getModules(a)} | (${getModules(b)}$)`;
+      return str;
+    }
+  })})`;
+  obj.reg = new RegExp(res);
+  for (let key in arr) {
+    obj.externals[getModules(arr[key])] = `library.${getModules(
+      arr[key],
+      true
+    )}`;
+  }
+  return obj;
+}
+const externals = getExternals();
+
 function getPath(p = "demo") {
   const res = {
     entry: "",
@@ -49,7 +94,7 @@ module.exports = {
       config.output.library("library");
     }
     config.plugin("html-index").tap(e => {
-      e[0].VRA = `http://pm4wqd1x0.bkt.clouddn.com/library/js/index.240dac96.js`;
+      e[0].VRA = externals.path;
       return e;
     });
     config.module
@@ -73,27 +118,24 @@ module.exports = {
       process.env.NODE_ENV == "production" &&
       process.env.ENV_file !== "library"
     ) {
-      config.externals = {
-        vue: "library.Vue",
-        axios: "library.axios",
-        "vue-router": "library.vueRouter",
-        vuex: "library.vuex"
-      };
+      console.log("123123312312123");
+      config.externals = externals.externals;
       const terserWebpackPlugin = config.optimization.minimizer[0];
       terserWebpackPlugin.options.test = /a.js$/;
       terserWebpackPlugin.options.terserOptions.compress.drop_console = true; //关闭生产的console
-      const splitChunksWebpackPlugin = config.optimization.splitChunks;
-      splitChunksWebpackPlugin.cacheGroups["VRA"] = {
-        //axios vue lib-flexible打到一起
-        name: "VRA",
-        test: /[\\/]node_modules[\\/]((vue$)|axios|vuex)/,
-        minSize: 10,
-        minChunks: 1,
-        maxInitialRequests: 3,
-        maxAsyncRequests: 5,
-        priority: 10, //优先级
-        chunks: "all"
-      };
+      // const splitChunksWebpackPlugin = config.optimization.splitChunks;
+      // splitChunksWebpackPlugin.cacheGroups["VRA"] = {
+      //   //axios vue lib-flexible打到一起
+      //   name: "VRA",
+      //   test: externals.reg,
+      //   //test: /[\\/]node_modules[\\/]((vue$)|axios|vuex)/,
+      //   minSize: 10,
+      //   minChunks: 1,
+      //   maxInitialRequests: 3,
+      //   maxAsyncRequests: 5,
+      //   priority: 10, //优先级
+      //   chunks: "all"
+      // };
     }
     fs.writeFileSync("test-config.json", JSON.stringify(config));
   },

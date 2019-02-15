@@ -1,7 +1,8 @@
 .DS_Store
 node_modules
 /dist
-test-config.json
+/testConfig.json
+/jsconfig.json
 # local env files
 .env.local
 .env.*.local

@@ -6,7 +6,7 @@ function resolve(p) {
   return res;
 }
 
-function getExternals(
+function getExternals( //获得放置在cdn上库的Externals配置（文件正则匹配、全局变量别名，发布的资源包地址）
   arr = [
     { key: "Vue", modules: "vue" },
     "axios",
@@ -30,7 +30,8 @@ function getExternals(
       return e;
     }
   }
-  var res = `[\\/]node_modules[\\/](${arr.reduce((a, b, index) => {
+  var reg = `[\\/]node_modules[\\/](${arr.reduce((a, b, index) => {
+    //拼接正则
     if (index == 1) {
       return `(${getModules(a)}$)|(${getModules(b)}$)`;
     } else {
@@ -38,7 +39,7 @@ function getExternals(
       return str;
     }
   })})`;
-  obj.reg = new RegExp(res);
+  obj.reg = new RegExp(reg);
   for (let key in arr) {
     obj.externals[getModules(arr[key])] = `library.${getModules(
       arr[key],
@@ -50,6 +51,7 @@ function getExternals(
 const externals = getExternals();
 
 function getPath(p = "demo") {
+  //获得入口文件，和模板地址
   const res = {
     entry: "",
     template: ""
@@ -58,18 +60,19 @@ function getPath(p = "demo") {
   res.template = resolve(`src/${p}/index.html`);
   return res;
 }
-const qiniu = require("./publicUtil/qiniuPlugin");
-const markExternals = require("./publicUtil/markExternals");
+const qiniu = require("./publicUtil/qiniuPlugin"); // 七牛云
+const markExternals = require("./publicUtil/markExternals"); //标记依赖包的hash值
 const qiniuPlugin = new qiniu({
   accessKey: "3DOo0aOowbfuHWXtGlvYyaLLLzNZ6kuzPaQPvFxK",
   secretKey: "bWNFh1rp8zLayGfFkWEZXvXVCDpt7wOl6jNOuNkC",
   bucket: "majia-fun",
   path: `${process.env.ENV_file}/`
 });
-const publicPath =
+const publicPath = //输出地址
   process.env.NODE_ENV === "development"
     ? ""
     : `http://pm4wqd1x0.bkt.clouddn.com/${process.env.ENV_file}/`;
+require("./publicUtil/changeJsConfig"); //自动加载Jsconfig,增加vscode文件跳转
 module.exports = {
   devServer: {
     contentBase: resolve(`../dist/${process.env.ENV_file}`),
@@ -139,7 +142,7 @@ module.exports = {
     }
     config.resolve.alias["@"] = resolve(`./src/${process.env.ENV_file}`);
     config.resolve.alias["=_="] = resolve(`./publicUtil`);
-    fs.writeFileSync("test-config.json", JSON.stringify(config));
+    fs.writeFileSync("testConfig.json", JSON.stringify(config));
   },
 
   pages: {

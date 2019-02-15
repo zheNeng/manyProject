@@ -8,6 +8,8 @@
     "lint": "vue-cli-service lint",
     "dev-demo": "cross-env ENV_file=demo npm run serve",
     "build-demo": "cross-env ENV_file=demo npm run build" ,
+    "dev-chunkTest": "cross-env ENV_file=chunkTest npm run serve",
+    "build-chunkTest": "cross-env ENV_file=chunkTest npm run build" ,
     "dev-library": "cross-env ENV_file=library npm run serve",
     "build-library": "cross-env ENV_file=library npm run build" 
   },

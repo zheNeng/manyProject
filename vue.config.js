@@ -1,6 +1,6 @@
 const path = require("path");
 const fs = require("fs");
-
+const vConsolePlugin = require("vconsole-webpack-plugin");
 function resolve(p) {
   const res = path.resolve(__dirname, p);
   return res;
@@ -106,6 +106,19 @@ module.exports = {
       e[0].VRA = externals.path;
       return e;
     });
+    config.plugin("vConsole").use(
+      new vConsolePlugin({
+        filter: [], // 需要过滤的入口文件
+        enable: process.env.BUILD_ENV !== "pro" // 发布代码前记得改回 false
+      })
+    );
+    if (process.env.BUILD_ENV) {
+      config.plugin("define").tap(arg => {
+        arg[0]["process.env.BUILD_ENV"] = `"${process.env.BUILD_ENV}"`;
+        console.log("BUILD_ENV=====", arg);
+        return arg;
+      });
+    }
     config.module
       .rule("vue")
       .use("px2rem")

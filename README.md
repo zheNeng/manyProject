@@ -63,12 +63,20 @@
 
     * template模板自定义一下插槽
 
-  8. webpack 配置输出到 test-config.json 文件
+  8. webpack 配置输出到 testConfig.json 文件
 
   9. 新增项目,请在 package.json 中配置启动指令，设置 cross-env 参数 ENV_file 的值
 
       "dev-demo": "cross-env ENV_file=demo npm run serve"
       "build-demo": "cross-env ENV_file=demo npm run build" 
+  
+  10.  分环境打包
+  
+       根据 BUILD_ENV 修改 env.config.js 中的环境 参数设置
+
+  11. vConsolePlugin
+
+      当 BUILD_ENV 不为 pro 的时候，会加载vConsolePlugin
     
     
 

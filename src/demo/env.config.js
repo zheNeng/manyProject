@@ -1,4 +1,5 @@
-const env = process.env.NODE_ENV === "development" ? "dev" : "dev"; //发生产的时候，要切换这个配置
+const env = process.env.BUILD_ENV || "dev"; //发生产的时候，要切换这个配置,process.env.BUILD_ENV在Build的时候将通过DefinePlugin替换为cross-env的值
+
 const title = "海底捞";
 const obj = {
   actCode: {

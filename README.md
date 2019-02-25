@@ -77,6 +77,8 @@
   11. vConsolePlugin
 
       当 BUILD_ENV 不为 pro 的时候，会加载vConsolePlugin
+  
+  12. tad指令，vue的点击节流指令
     
     
 

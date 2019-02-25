@@ -1,3 +1,7 @@
+/**
+ *
+ * @param {object} obj 判断是不是Promise对象
+ */
 function isPromise(obj) {
   const res =
     !!obj &&
@@ -5,7 +9,12 @@ function isPromise(obj) {
     typeof obj.then === "function";
   return res;
 }
-
+/**
+ *
+ * @param {function} fn 绑定的函数
+ * @param {*} type promise或者节流
+ * @param {*} time 节流的事件
+ */
 export function deb(fn, type = "promise", time = 1000) {
   // fn是一个函数,返回promise
   var lock = false;

@@ -1,4 +1,7 @@
 import { deb } from "=_=/deb.js";
+/**
+ * Vue指令，节流指令，未加修饰符，可加修饰符
+ */
 export const tad = {
   name: "tad",
   bind(el, binding, vnode) {

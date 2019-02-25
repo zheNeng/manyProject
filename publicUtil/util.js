@@ -1,3 +1,6 @@
+/**
+ * 返回 WX AL 或者 null
+ */
 export function judgeEnvironment() {
   const userAgent = navigator.userAgent.toLowerCase();
   if (
@@ -14,6 +17,10 @@ export function judgeEnvironment() {
     return null;
   }
 }
+/**
+ * 判断是不是默认的对象
+ * @param {object} obj
+ */
 /* eslint-disable */
 export function checkDefault(obj) {
   const type = Object.prototype.toString.call(obj);
@@ -37,6 +44,10 @@ export function checkDefault(obj) {
   }
   return true;
 }
+/**
+ * 默认是location.search.substr(1),可传入string
+ * @param {string} urlParams 
+ */
 export function getUrlParams(urlParams) {
   const obj = {};
   let str = "";
@@ -52,6 +63,9 @@ export function getUrlParams(urlParams) {
     });
   return obj;
 }
+/**
+ * 获得 # 前后的url参数
+ */
 export function getAllParams() {
   var str = location.hash;
   var index = str.indexOf("?");
